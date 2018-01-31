@@ -56,6 +56,7 @@ LOCAL_APPS = [
     # custom users app
     'forum.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'forum.board.apps.BoardConfig'
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
