@@ -2,6 +2,7 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
+    label = 'users'
     name = 'forum.users'
     verbose_name = "Users"
 

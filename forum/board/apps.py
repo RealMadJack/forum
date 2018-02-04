@@ -2,6 +2,7 @@ from django.apps import AppConfig
 
 
 class BoardConfig(AppConfig):
+    label = 'board'
     name = 'forum.board'
     verbose_name = "Board"
 

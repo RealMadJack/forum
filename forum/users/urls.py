@@ -1,28 +1,29 @@
-from django.urls import path
+from django.urls import re_path
 
+from .apps import UsersConfig
 from . import views
 
+app_name = UsersConfig.label
+
 urlpatterns = [
-    path(
-        '',
+    re_path(
+        r'^$',
         view=views.UserListView.as_view(),
         name='list'
     ),
-    path(
-        '~redirect/',
+    re_path(
+        r'^~redirect/$',
         view=views.UserRedirectView.as_view(),
         name='redirect'
     ),
-    path(
-        '<username>/',
+    re_path(
+        r'^(?P<username>[\w.@+-]+)/$',
         view=views.UserDetailView.as_view(),
         name='detail'
     ),
-    path(
-        '~update/',
+    re_path(
+        r'^~update/$',
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
 ]
-
-# [\w.@+-]+

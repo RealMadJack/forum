@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.urls import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .utils import get_unique_slug
@@ -11,6 +12,9 @@ class Board(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('board:board', kwargs={'board_slug': self.slug})
+
     class Meta:
         verbose_name = _('Board')
         verbose_name_plural = _('Boards')
@@ -22,12 +26,20 @@ class Board(models.Model):
 
 
 class Category(models.Model):
-    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    board = models.ForeignKey(
+        Board,
+        on_delete=models.CASCADE,
+        related_name='categories',
+        related_query_name='category',
+    )
     name = models.CharField(_('Board category name'), max_length=255)
     slug = models.SlugField(max_length=155, unique=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('board:category', kwargs={'category_slug': self.slug})
 
     class Meta:
         verbose_name = _('Category')
@@ -40,14 +52,27 @@ class Category(models.Model):
 
 
 class Topic(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='topics',
+        related_query_name='topic',
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='topics',
+        related_query_name='topic',
+    )
     name = models.CharField(_('Topic name'), max_length=255)
     message = models.TextField(_('Topic message'), max_length=1024)
     slug = models.SlugField(max_length=155, unique=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('board:topic', kwargs={'topic_slug': self.slug})
 
     class Meta:
         verbose_name = _('Topic')
@@ -60,8 +85,18 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='posts',
+        related_query_name='post',
+    )
+    topic = models.ForeignKey(
+        Topic,
+        on_delete=models.CASCADE,
+        related_name='posts',
+        related_query_name='post',
+    )
     message = models.TextField(_('Topic post'), max_length=512)
 
     def __str__(self):
