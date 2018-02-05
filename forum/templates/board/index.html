@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <ul>
+    {% for board in boards %}
+      <li><a href="{% url 'board:board' board.slug %}">{{board.name}}</a></li>
+    {% endfor %}
+  </ul>
+
   <h1>{{board.name}}</h1>
 
   {% for category in categories %}
-  <li>{{category.name}}</li>
+    <li><a href="{% url 'board:category' board.slug category.slug %}">{{category.name}} -------------- topics: {{category.topics.count}}</a></li>
+
+    {% for topic in category.topics.all %}
+      <a href="{% url 'board:topic' board.slug category.slug topic.slug %}">
+        {{topic.name}} ---------- posts: {{topic.posts.count}}
+      </a>
+    {% endfor %}
+
   {% endfor %}
 
 {% endblock content %}

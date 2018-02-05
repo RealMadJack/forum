@@ -12,6 +12,9 @@ class BoardAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     model = Category
     readonly_fields = ('slug', )
+    list_display = (
+        'name', 'board',
+    )
 
 
 @admin.register(Topic)

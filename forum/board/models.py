@@ -2,10 +2,12 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from model_utils.models import TimeStampedModel
 from .utils import get_unique_slug
 
 
-class Board(models.Model):
+class Board(TimeStampedModel):
     name = models.CharField(_('Board name'), blank=True, max_length=255)
     slug = models.SlugField(max_length=155, unique=True)
 
@@ -25,7 +27,7 @@ class Board(models.Model):
         super().save()
 
 
-class Category(models.Model):
+class Category(TimeStampedModel):
     board = models.ForeignKey(
         Board,
         on_delete=models.CASCADE,
@@ -51,7 +53,7 @@ class Category(models.Model):
         super().save()
 
 
-class Topic(models.Model):
+class Topic(TimeStampedModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -84,7 +86,7 @@ class Topic(models.Model):
         super().save()
 
 
-class Post(models.Model):
+class Post(TimeStampedModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
