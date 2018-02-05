@@ -70,6 +70,10 @@ class Topic(TimeStampedModel):
     message = models.TextField(_('Topic message'), max_length=1024)
     slug = models.SlugField(max_length=155, unique=True)
 
+    @property
+    def short_message(self):
+        return self.message[:150].strip()
+
     def __str__(self):
         return self.name
 
@@ -100,6 +104,10 @@ class Post(TimeStampedModel):
         related_query_name='post',
     )
     message = models.TextField(_('Topic post'), max_length=512)
+
+    @property
+    def short_message(self):
+        return self.message[:150].strip()
 
     def __str__(self):
         return self.message

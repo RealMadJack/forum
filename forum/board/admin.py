@@ -6,6 +6,9 @@ from .models import Board, Category, Topic, Post
 class BoardAdmin(admin.ModelAdmin):
     model = Board
     readonly_fields = ('slug', )
+    list_display = (
+        'name', 'created', 'modified',
+    )
 
 
 @admin.register(Category)
@@ -13,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
     model = Category
     readonly_fields = ('slug', )
     list_display = (
-        'name', 'board',
+        'name', 'board', 'created', 'modified',
     )
 
 
@@ -21,8 +24,14 @@ class CategoryAdmin(admin.ModelAdmin):
 class TopicAdmin(admin.ModelAdmin):
     model = Topic
     readonly_fields = ('slug', )
+    list_display = (
+        'name', 'short_message', 'category', 'user', 'created', 'modified',
+    )
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     model = Post
+    list_display = (
+        'user', 'short_message', 'topic', 'created', 'modified',
+    )

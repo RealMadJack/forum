@@ -2,7 +2,6 @@ from django.utils.text import slugify
 
 
 def get_unique_slug(cls, name):
-    print('name: ', name)
     slug = slugify(name)
     unique_slug = slug
     num = 1
