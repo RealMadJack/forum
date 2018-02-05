@@ -17,7 +17,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    path('', RedirectView.as_view(url='board/')),
+    path('', RedirectView.as_view(url='board:home')),
     path('board/', include('forum.board.urls')),
 
 

@@ -1,12 +1,14 @@
+{% load crispy_forms_tags %}
+
 <form style="margin-top: 15px;" action="{% url 'board:topic_post' board_slug category_slug topic_slug %}" method="post">
   {% csrf_token %}
 
   {% for field in form %}
-    <div class="form-group">
+    <div class="form-group mt-30" style="max-width: 350px">
 
       {{field}}
 
-      <button type="submit" class="btn btn-primary">Post message</div></button>
+      <button type="submit" class="btn btn-primary mt-15">Post message</div></button>
 
       {% for error in field.errors %}
         <p class="error-block">{{error}}</p>

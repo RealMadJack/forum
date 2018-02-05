@@ -33,7 +33,17 @@ class CategoryView(TemplateView):
     template_name = 'board/category.html'
 
     def get(self, request, *args, **kwargs):
-        pass
+        try:
+            category = Category.objects.select_related().prefetch_related(
+                'topics').get(slug=kwargs['category_slug'])
+            topics = category.topics.all()
+            context = {'category': category, 'topics': topics}
+            return render(
+                request,
+                context=context,
+                template_name=self.template_name)
+        except Category.DoesNotExist:
+            return redirect('/404/')
 
 
 class TopicView(TemplateView):
@@ -80,3 +90,5 @@ class TopicView(TemplateView):
                 post.save()
 
                 return redirect(topic)
+            else:
+                return redirect('/403/')

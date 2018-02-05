@@ -10,3 +10,19 @@
 
 [hidden][style="display: block;"] {
   display: block !important; }
+
+.mlr-7 {
+  margin-left: 7px;
+  margin-right: 7px; }
+
+.mt-15 {
+  margin-top: 15px; }
+
+.mt-30 {
+  margin-top: 30px; }
+
+.mb-15 {
+  margin-bottom: 15px; }
+
+.mb-30 {
+  margin-bottom: 30px; }
