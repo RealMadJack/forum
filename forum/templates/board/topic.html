@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{topic.name}}</h1>
+
+  <li style="margin-bottom: 25px;">
+    user: {{topic.user.username}} - {{topic.message}}
+    <br>
+    <small>Created: {{topic.created}} - Modified: {{topic.modified}}</small>
+  </li>
+
+  {% for post in posts %}
+  <li>
+    user: {{post.user.username}} - {{post.message}}
+    <br>
+    <small>Created: {{post.created}} - Modified: {{post.modified}}</small>
+  </li>
+  {% endfor %}
+
+  {% include 'board/topic_post_form.html' %}
+
+{% endblock content %}

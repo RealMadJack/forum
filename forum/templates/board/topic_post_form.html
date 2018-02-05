@@ -1,0 +1,18 @@
+<form style="margin-top: 15px;" action="{% url 'board:topic_post' board_slug category_slug topic_slug %}" method="post">
+  {% csrf_token %}
+
+  {% for field in form %}
+    <div class="form-group">
+
+      {{field}}
+
+      <button type="submit" class="btn btn-primary">Post message</div></button>
+
+      {% for error in field.errors %}
+        <p class="error-block">{{error}}</p>
+      {% endfor %}
+
+    </div>
+  {% endfor %}
+
+</form>

@@ -11,5 +11,7 @@ urlpatterns = [
     path('<slug:board_slug>/<slug:category_slug>',
          view=views.CategoryView.as_view(), name='category'),
     path('<slug:board_slug>/<slug:category_slug>/<slug:topic_slug>',
-         view=views.TopicView.as_view(), name='topic')
+         view=views.TopicView.as_view(), name='topic'),
+    path('<slug:board_slug>/<slug:category_slug>/<slug:topic_slug>',
+         view=views.TopicView.as_view(), name='topic_post'),
 ]

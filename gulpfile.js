@@ -10,7 +10,7 @@ var gulp = require('gulp'),
       sass = require('gulp-sass'),
       autoprefixer = require('gulp-autoprefixer'),
       cssnano = require('gulp-cssnano'),
-      
+
       rename = require('gulp-rename'),
       del = require('del'),
       plumber = require('gulp-plumber'),
@@ -29,7 +29,7 @@ var pathsConfig = function (appName) {
   var vendorsRoot = 'node_modules/';
 
   return {
-    
+
     app: this.app,
     templates: this.app + '/templates',
     css: this.app + '/static/css',
@@ -48,10 +48,10 @@ var paths = pathsConfig();
 
 // Styles autoprefixing and minification
 gulp.task('styles', function() {
-  return gulp.src(paths.sass + '/project.scss')
+  return gulp.src(paths.sass + '/project.sass')
     .pipe(sass({
       includePaths: [
-        
+
         paths.sass
       ]
     }).on('error', sass.logError))
@@ -103,7 +103,7 @@ gulp.task('browserSync', function() {
 // Watch
 gulp.task('watch', function() {
 
-  gulp.watch(paths.sass + '/*.scss', ['styles']);
+  gulp.watch(paths.sass + '/*.sass', ['styles']);
   gulp.watch(paths.js + '/*.js', ['scripts']).on("change", reload);
   gulp.watch(paths.images + '/*', ['imgCompression']);
   gulp.watch(paths.templates + '/**/*.html').on("change", reload);

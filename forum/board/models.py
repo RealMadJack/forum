@@ -41,7 +41,10 @@ class Category(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('board:category', kwargs={'category_slug': self.slug})
+        return reverse('board:category', kwargs={
+            'category_slug': self.slug,
+            'board_slug': self.board.slug,
+        })
 
     class Meta:
         verbose_name = _('Category')
@@ -78,7 +81,11 @@ class Topic(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('board:topic', kwargs={'topic_slug': self.slug})
+        return reverse('board:topic', kwargs={
+            'topic_slug': self.slug,
+            'category_slug': self.category.slug,
+            'board_slug': self.category.board.slug,
+        })
 
     class Meta:
         verbose_name = _('Topic')
