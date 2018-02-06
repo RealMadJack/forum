@@ -55,16 +55,10 @@ class TopicView(TemplateView):
             topic = Topic.objects.select_related().get(
                 slug=kwargs['topic_slug'])
             posts = topic.posts.all()
-            topic_slug = topic.slug
-            category_slug = topic.category.slug
-            board_slug = topic.category.board.slug
             context = {
                 'topic': topic,
                 'posts': posts,
                 'form': self.form,
-                'board_slug': board_slug,
-                'topic_slug': topic_slug,
-                'category_slug': category_slug,
             }
             return render(request, context=context, template_name=self.template_name)
         except Topic.DoesNotExist:
@@ -92,3 +86,5 @@ class TopicView(TemplateView):
                 return redirect(topic)
             else:
                 return redirect('/403/')
+        else:
+            print('validation incomplete')

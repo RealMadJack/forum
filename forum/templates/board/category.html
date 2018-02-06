@@ -3,18 +3,22 @@
 {% block content %}
   <h1 class="display-4 mt-30" style="margin-bottom: 50px">{{category.name}}</h1>
 
-  <div class="card mb-15" style="width: 18rem;">
-    <ul class="list-group list-group-flush">
-      {% for topic in topics %}
-        <li class="list-group-item">
-          <a href="{% url 'board:topic' category.board.slug category.slug topic.slug %}">
-            {{topic.name}}
-            <span style="float: right; padding: .3rem .50rem" class="btn btn-outline-primary">
-              <small>Comments: <span class="badge badge-light">{{topic.posts.count}}</span></small>
-            </span>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card mb-15" style="max-width: 100%">
+        <ul class="list-group list-group-flush">
+          {% for topic in topics %}
+            <li class="list-group-item">
+              <a href="{{topic.get_absolute_url}}">
+                {{topic.name}}
+                <span style="float: right; padding: .3rem .50rem" class="btn btn-outline-primary">
+                  <small>Comments: <span class="badge badge-light">{{topic.posts.count}}</span></small>
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock content %}

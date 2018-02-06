@@ -1,6 +1,6 @@
 {% load crispy_forms_tags %}
 
-<form style="margin-top: 15px;" action="{% url 'board:topic_post' board_slug category_slug topic_slug %}" method="post">
+<form style="margin-top: 15px;" action="{{topic.get_absolute_url}}" method="post">
   {% csrf_token %}
 
   {% for field in form %}
