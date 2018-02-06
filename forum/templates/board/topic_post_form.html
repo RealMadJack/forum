@@ -1,20 +1,7 @@
 {% load crispy_forms_tags %}
 
-<form style="margin-top: 15px;" action="{{topic.get_absolute_url}}" method="post">
-  {% csrf_token %}
-
-  {% for field in form %}
-    <div class="form-group mt-30" style="max-width: 350px">
-
-      {{field}}
-
-      <button type="submit" class="btn btn-primary mt-15">Post message</div></button>
-
-      {% for error in field.errors %}
-        <p class="error-block">{{error}}</p>
-      {% endfor %}
-
-    </div>
-  {% endfor %}
-
+<form style="max-width: 400px;margin-top: 15px;" action="{{topic.get_absolute_url}}" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Post message</div></button>
 </form>

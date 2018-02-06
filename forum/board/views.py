@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
 
@@ -11,12 +11,11 @@ class BoardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
+            board = Board.objects.prefetch_related('categories__topics__posts')
             if kwargs:
-                board = Board.objects.prefetch_related(
-                    'categories__topics__posts').get(slug=kwargs['board_slug'])
+                board = board.get(slug=kwargs['board_slug'])
             else:
-                board = Board.objects.prefetch_related(
-                    'categories__topics__posts').first()
+                board = board.first()
             boards = Board.objects.all()
             categories = board.categories.all()
             context = {'board': board, 'boards': boards,
@@ -33,10 +32,11 @@ class CategoryView(TemplateView):
     template_name = 'board/category.html'
 
     def get(self, request, *args, **kwargs):
+        print(kwargs)
         try:
-            category = Category.objects.select_related().prefetch_related(
-                'topics').get(slug=kwargs['category_slug'])
-            topics = category.topics.all()
+            category = Category.objects.select_related().get(
+                slug=kwargs['category_slug'])
+            topics = category.topics.prefetch_related('posts').all()
             context = {'category': category, 'topics': topics}
             return render(
                 request,
@@ -52,9 +52,8 @@ class TopicView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-            topic = Topic.objects.select_related().get(
-                slug=kwargs['topic_slug'])
-            posts = topic.posts.all()
+            topic = Topic.objects.select_related().get(slug=kwargs['topic_slug'])
+            posts = topic.posts.select_related().all()
             context = {
                 'topic': topic,
                 'posts': posts,
@@ -66,16 +65,14 @@ class TopicView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
+        topic = get_object_or_404(Topic, slug=kwargs['topic_slug'])
 
         if form.is_valid():
             if request.user.is_authenticated:
                 User = get_user_model()
                 username = request.user.get_username()
                 message = form.cleaned_data['message']
-
-                topic = Topic.objects.get(
-                    slug=kwargs['topic_slug'])
-                user = User.objects.get(username=username)
+                user = get_object_or_404(User, username=username)
 
                 post = Post(
                     topic=topic,
@@ -86,5 +83,5 @@ class TopicView(TemplateView):
                 return redirect(topic)
             else:
                 return redirect('/403/')
-        else:
-            print('validation incomplete')
+        form = TopicForm()
+        return redirect(topic)
