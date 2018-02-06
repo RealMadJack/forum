@@ -12,12 +12,9 @@ class TestBoardUrls(TestCase):
         self.user = self.make_user()
 
     def test_index_redirect(self):
-        response = self.client.get(
-            '',
-            follow=True,
-        )
+        response = self.client.get('', follow=True)
 
-        # test redirect ur;
+        # test redirect url
         self.assertEqual(response.redirect_chain[0][0], 'board/')
         # test redirect status_code
         self.assertEqual(response.redirect_chain[0][1], 302)
