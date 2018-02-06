@@ -32,7 +32,6 @@ class CategoryView(TemplateView):
     template_name = 'board/category.html'
 
     def get(self, request, *args, **kwargs):
-        print(kwargs)
         try:
             category = Category.objects.select_related().get(
                 slug=kwargs['category_slug'])
@@ -83,5 +82,6 @@ class TopicView(TemplateView):
                 return redirect(topic)
             else:
                 return redirect('/403/')
-        form = TopicForm()
+        else:
+            form = self.form()
         return redirect(topic)
