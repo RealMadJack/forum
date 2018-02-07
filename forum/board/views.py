@@ -81,7 +81,7 @@ class TopicView(TemplateView):
 
                 return redirect(topic)
             else:
-                return redirect('/403/')
+                return redirect('/404/')
         else:
             form = self.form()
         return redirect(topic)
