@@ -22,11 +22,18 @@ class TestBoardUrls(TestCase):
     def test_home_reverse(self):
         self.assertEqual(reverse('board:home'), '/board/')
 
+    def test_home_resolve(self):
+        self.assertEqual(resolve('/board/').view_name, 'board:home')
+
     def test_board_reverse(self):
         self.assertEqual(
             reverse('board:board', kwargs={'board_slug': 'test-board-slug'}),
             '/board/test-board-slug'
         )
+
+    def test_board_resolve(self):
+        self.assertEqual(
+            resolve('/board/test-board-slug').view_name, 'board:board')
 
     def test_category_reverse(self):
         self.assertEqual(
@@ -37,6 +44,10 @@ class TestBoardUrls(TestCase):
             '/board/test-board-slug/test-category-slug'
         )
 
+    def test_category_resolve(self):
+        self.assertEqual(
+            resolve('/board/test-board-slug/test-category-slug').view_name, 'board:category')
+
     def test_topic_reverse(self):
         self.assertEqual(
             reverse('board:topic', kwargs={
@@ -46,3 +57,7 @@ class TestBoardUrls(TestCase):
             }),
             '/board/test-board-slug/test-category-slug/test-topic-slug'
         )
+
+    def test_topic_resolve(self):
+        self.assertEqual(
+            resolve('/board/board-slug/category-slug/topic-slug').view_name, 'board:topic')

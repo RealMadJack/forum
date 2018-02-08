@@ -9,8 +9,8 @@ Production settings for forum project.
 
 """
 
-
-
+import os
+os.environ["DJANGO_READ_DOT_ENV_FILE"] = "true"
 from .base import *  # noqa
 
 # SECRET CONFIGURATION

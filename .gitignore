@@ -245,6 +245,7 @@ Temporary Items
 *.stTheme.cache
 
 # Workspace files are user-specific
+*.sublime-project
 *.sublime-workspace
 
 # Project files should be checked into the repository, unless a significant
