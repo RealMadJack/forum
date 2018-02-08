@@ -1,4 +1,4 @@
-from django.urls import reverse, resolve
+from django.urls import reverse
 from django.test import RequestFactory, Client
 from test_plus.test import TestCase
 
@@ -34,10 +34,12 @@ class TestBoardView(BaseBoardTestCase):
         self.board_url_invalid = reverse(
             'board:board', kwargs={'board_slug': 'invalid_slug'})
 
-    def test_get_view_status_code(self):
+    def test_get_view(self):
         request = self.factory.get(self.board_url_valid)
         response = BoardView.as_view()(request)
+        html = response.content.decode('utf8')
         self.assertEqual(response.status_code, 200)
+        self.assertTrue(html.endswith('</html>'))
 
     def test_get_view_status_code_invalid(self):
         response_client = self.client.get(self.board_url_invalid, follow=True)
