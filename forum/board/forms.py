@@ -6,7 +6,7 @@ class TopicForm(forms.Form):
         label='Message:',
         max_length=500,
         required=False,
-        widget=forms.Textarea(attrs={'rows': '4'}),
+        widget=forms.Textarea(attrs={'rows': '4', 'class': 'form-control'}),
     )
 
     def clean_message(self):

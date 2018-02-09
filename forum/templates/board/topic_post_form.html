@@ -1,7 +1,5 @@
-{% load crispy_forms_tags %}
-
 <form style="max-width: 400px;margin-top: 15px;" action="{{topic.get_absolute_url}}" method="post">
     {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Post message</div></button>
+    {{ form }}
+    <button type="submit" class="btn btn-primary mt-15">Post message</div></button>
 </form>

@@ -39,7 +39,6 @@ class TestBoardView(BaseBoardTestCase):
         response = BoardView.as_view()(request)
         html = response.content.decode('utf8')
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(html.endswith('</html>'))
 
     def test_get_view_status_code_invalid(self):
         response_client = self.client.get(self.board_url_invalid, follow=True)

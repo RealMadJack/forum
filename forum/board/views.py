@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import get_user_model
 
 from .models import Board, Category, Topic, Post
 from .forms import TopicForm
 
 
-class BoardView(TemplateView):
+class BoardView(ListView):
     template_name = 'board/index.html'
 
     def get(self, request, *args, **kwargs):
@@ -28,7 +28,7 @@ class BoardView(TemplateView):
             return redirect('/404/')
 
 
-class CategoryView(TemplateView):
+class CategoryView(ListView):
     template_name = 'board/category.html'
 
     def get(self, request, *args, **kwargs):
@@ -45,9 +45,13 @@ class CategoryView(TemplateView):
             return redirect('/404/')
 
 
-class TopicView(TemplateView):
+class TopicView(DetailView):
     template_name = 'board/topic.html'
     form = TopicForm
+
+    def form_invalid(self, form):
+        # Do custom logic here
+        return super(TopicView, self).form_invalid(form)
 
     def get(self, request, *args, **kwargs):
         try:
@@ -81,7 +85,7 @@ class TopicView(TemplateView):
 
                 return redirect(topic)
             else:
-                return redirect('/404/')
+                return redirect('/401/')
         else:
             form = self.form()
         return redirect(topic)
